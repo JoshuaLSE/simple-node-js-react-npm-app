@@ -18,7 +18,7 @@ pipeline {
         }
 	stage('OWASP DependencyCheck') {
             steps {
-                dependencyCheck additionalArguments: '', odcInstallation: 'OWASP Dependency Check'
+                dependencyCheck additionalArguments: '--format HTML --format XML --enableExperimental', odcInstallation: 'OWASP Dependency Check'
             }
         }
         stage('Deliver') {
@@ -29,6 +29,11 @@ pipeline {
             }
         }
 
+    }
+    post {
+        success {
+            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        }
     }
 }
 
