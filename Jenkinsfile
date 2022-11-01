@@ -12,10 +12,10 @@ pipeline {
             }
         }
         stage('OWASP DependencyCheck') {
-			steps {
-				dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'OWASP Dependency Check'
-			}
+		steps {
+			dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'OWASP Dependency Check'
 		}
+	}
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
@@ -28,7 +28,11 @@ pipeline {
                 sh './jenkins/scripts/kill.sh'
             }
         }
-
     }
+	post {
+		success {
+			dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+		}
+	}
 }
 
