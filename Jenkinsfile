@@ -16,10 +16,15 @@ pipeline {
                 sh './jenkins/scripts/test.sh'
             }
         }
+	stage('OWASP DependencyCheck') {
+            steps {
+                dependencyCheck additionalArguments: '', odcInstallation: 'OWASP Dependency Check'
+		dependencyCheckPublisher pattern: ''
+            }
+        }
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-		sh 'npm start'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
             }
