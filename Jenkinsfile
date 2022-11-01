@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:lts-buster-slim' 
-            args '-p 3000:80' 
+            args '-p 80:80' 
         }
     }
     stages {
@@ -19,7 +19,6 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-		sh 'npm run start'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
             }
