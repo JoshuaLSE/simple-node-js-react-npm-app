@@ -16,11 +16,6 @@ pipeline {
                 sh './jenkins/scripts/test.sh'
             }
         }
-	stage('OWASP DependencyCheck') {
-            steps {
-                dependencyCheck additionalArguments: '--format HTML --format XML --enableExperimental', odcInstallation: 'OWASP Dependency Check'
-            }
-        }
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
@@ -29,11 +24,6 @@ pipeline {
             }
         }
 
-    }
-    post {
-        success {
-            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-        }
     }
 }
 
