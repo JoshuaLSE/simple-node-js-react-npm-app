@@ -11,11 +11,6 @@ pipeline {
                 sh 'npm install' 
             }
         }
-        stage('OWASP DependencyCheck') {
-		steps {
-			dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'OWASP Dependency Check'
-		}
-	}
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
@@ -29,10 +24,5 @@ pipeline {
             }
         }
     }
-	post {
-		success {
-			dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-		}
-	}
 }
 
