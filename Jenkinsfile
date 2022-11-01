@@ -19,7 +19,6 @@ pipeline {
 	stage('OWASP DependencyCheck') {
             steps {
                 dependencyCheck additionalArguments: '', odcInstallation: 'OWASP Dependency Check'
-		dependencyCheckPublisher pattern: ''
             }
         }
         stage('Deliver') {
